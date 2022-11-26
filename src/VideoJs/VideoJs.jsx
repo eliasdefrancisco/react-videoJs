@@ -1,17 +1,34 @@
+// @ts-check
+
 import React, { useEffect, useRef } from 'react'
 import videojs from 'video.js'
 import 'video.js/dist/video-js.css'
 import VideoJsTag from './VideoJsTag'
 
+/**
+ * @typedef {import('video.js').VideoJsPlayerOptions} VideoJsPlayerOptions
+ * @typedef {import('video.js').VideoJsPlayer} VideoJsPlayer
+ * @typedef {React.MutableRefObject<HTMLVideoElement | null>} HTMLVideoElementRef
+ * @typedef {React.MutableRefObject<VideoJsPlayer | null>} VideoJsPlayerRef
+ * 
+ * 
+ * @typedef {Object} VideoJsProps
+ * @property {VideoJsPlayerOptions} VideoJsProps.options
+ * @property {(VideoJsPlayer) => void} VideoJsProps.onReady
+ */
+
+/** @param {VideoJsProps} props */
 export function VideoJS (props) {
+
+  /** @type {HTMLVideoElementRef} */
   const videoRef = useRef(null)
+
+  /** @type {VideoJsPlayerRef} */
   const playerRef = useRef(null)
+
   const {options, onReady} = props
 
   useEffect(() => {
-
-    console.log('playerRef.current', playerRef.current)
-    console.log('videoRef.current', videoRef.current)
 
     // Make sure Video.js player is only initialized once
     if (!playerRef.current && videoRef.current) {
@@ -54,7 +71,7 @@ export function VideoJS (props) {
 
   return (
     <div data-vjs-player>
-      <video-js ref={videoRef} />
+      <VideoJsTag htmlRef={videoRef} />
     </div>
   )
 }
