@@ -2,15 +2,26 @@
 
 import React, { useEffect, useRef } from 'react'
 import videojs from 'video.js'
+
+// Base VideoJs CSS
 import 'video.js/dist/video-js.css'
-import VideoJsTag from './VideoJsTag'
+
+// Video JS Plugins from https://github.com/videojs/themes
+
+// City Theme CSS
+import '@videojs/themes/dist/city/index.css'
+// Fantasy Theme CSS
+import '@videojs/themes/dist/fantasy/index.css'
+// Forest Theme CSS
+import '@videojs/themes/dist/forest/index.css'
+// Sea Theme CSS
+import '@videojs/themes/dist/sea/index.css'
 
 /**
  * @typedef {import('video.js').VideoJsPlayerOptions} VideoJsPlayerOptions
  * @typedef {import('video.js').VideoJsPlayer} VideoJsPlayer
- * @typedef {React.MutableRefObject<HTMLVideoElement | null>} HTMLVideoElementRef
+ * @typedef {React.MutableRefObject<HTMLDivElement | null>} HTMLDivElementRef
  * @typedef {React.MutableRefObject<VideoJsPlayer | null>} VideoJsPlayerRef
- * 
  * 
  * @typedef {Object} VideoJsProps
  * @property {VideoJsPlayerOptions} VideoJsProps.options
@@ -20,7 +31,7 @@ import VideoJsTag from './VideoJsTag'
 /** @param {VideoJsProps} props */
 export function VideoJS (props) {
 
-  /** @type {HTMLVideoElementRef} */
+  /** @type {HTMLDivElementRef} */
   const videoRef = useRef(null)
 
   /** @type {VideoJsPlayerRef} */
@@ -37,6 +48,13 @@ export function VideoJS (props) {
       const videoElement = document.createElement("video-js")
 
       videoElement.classList.add('vjs-big-play-centered')
+
+      // videoElement.classList.add('vjs-theme-city')
+      // videoElement.classList.add('vjs-theme-fantasy')
+      videoElement.classList.add('vjs-theme-fantasy')
+      // videoElement.classList.add('vjs-theme-forest')
+      // videoElement.classList.add('vjs-theme-sea')
+      
       videoRef.current.appendChild(videoElement)
 
       const player = playerRef.current = videojs(videoElement, options, () => {
@@ -69,9 +87,6 @@ export function VideoJS (props) {
   }, [playerRef])
 
 
-  return (
-    <div data-vjs-player>
-      <VideoJsTag htmlRef={videoRef} />
-    </div>
-  )
+  return <div data-vjs-player ref={videoRef} />
+
 }
